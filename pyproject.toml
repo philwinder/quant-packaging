@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quant-packaging"
+version = "0.1.0"
+description = "A library for packaging quant trading strategies into deployable Docker containers"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Phil Winder", email = "phil@winder.ai"}
+]
+keywords = ["quant", "trading", "packaging", "docker", "deployment"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+dependencies = [
+    "dill>=0.3.7",
+    "pandas>=1.5.0",
+    "numpy>=1.24.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+server = [
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "python-multipart>=0.0.6",
+]
+dev = [
+    "pytest>=7.4.0",
+    "jupyter>=1.0.0",
+    "ipython>=8.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/philwinder/quant-packaging"
+Documentation = "https://github.com/philwinder/quant-packaging"
+Repository = "https://github.com/philwinder/quant-packaging"
+
+[tool.hatch.build.targets.wheel]
+packages = ["quant_packaging"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.4.0",
+    "jupyter>=1.0.0",
+    "ipython>=8.0.0",
+    "ruff>=0.1.0",
+]
