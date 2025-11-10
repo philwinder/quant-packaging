@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=65.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "quant-packaging"
@@ -48,6 +48,13 @@ Homepage = "https://github.com/philwinder/quant-packaging"
 Documentation = "https://github.com/philwinder/quant-packaging"
 Repository = "https://github.com/philwinder/quant-packaging"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["quant_packaging*"]
+[tool.hatch.build.targets.wheel]
+packages = ["quant_packaging"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.4.0",
+    "jupyter>=1.0.0",
+    "ipython>=8.0.0",
+    "ruff>=0.1.0",
+]

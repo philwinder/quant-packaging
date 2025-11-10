@@ -14,6 +14,31 @@ A Python library for packaging quantitative trading strategies developed in Jupy
 
 ## Installation
 
+### Using uv (Recommended)
+
+[uv](https://github.com/astral-sh/uv) is a fast Python package manager. Install it first:
+
+```bash
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Then install the package:
+
+```bash
+# Install the library
+uv sync
+
+# Install with all optional dependencies (server + dev)
+uv sync --all-extras
+
+# Or install specific extras
+uv sync --extra server  # For FastAPI server dependencies
+uv sync --extra dev     # For Jupyter and testing
+```
+
+### Using pip
+
 ```bash
 # Install from source
 pip install -e .
@@ -258,8 +283,12 @@ quant-packaging/
 │   ├── container.py         # Strategy loading/execution
 │   └── docker_builder.py    # Docker deployment generation
 ├── examples/
-│   └── strategy_packaging_demo.ipynb  # Complete example
-├── pyproject.toml           # Package configuration
+│   ├── strategy_packaging_demo.ipynb  # Complete Jupyter demo
+│   ├── simple_example.py             # Python script demo
+│   └── README.md
+├── pyproject.toml           # Package configuration (uv-compatible)
+├── uv.lock                 # Locked dependencies
+├── LICENSE
 └── README.md
 ```
 
@@ -360,12 +389,37 @@ When your container is running, visit:
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
+## Development
+
+See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed development setup instructions, including:
+
+- Setting up with uv
+- Running tests
+- Code formatting and linting
+- Building and testing deployments
+
+Quick start for development:
+
+```bash
+# Clone and setup
+git clone https://github.com/philwinder/quant-packaging.git
+cd quant-packaging
+
+# Install with uv
+uv sync --all-extras
+
+# Run examples
+uv run examples/simple_example.py
+```
+
 ## Contributing
 
 Contributions are welcome! This library is designed to be:
 - Easy to extend with new deployment targets
 - Compatible with various serialization formats
 - Flexible for different API frameworks
+
+Please use `uv` for dependency management and run `uv run ruff format` before submitting PRs
 
 ## License
 

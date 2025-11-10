@@ -19,13 +19,36 @@ A comprehensive end-to-end example showing:
 
 ### Prerequisites
 
+Install the library with dev dependencies:
+
+**Using uv (recommended):**
 ```bash
-# Install the library with dev dependencies
+uv sync --extra dev
+```
+
+**Using pip:**
+```bash
 pip install -e ".[dev]"
+```
+
+### Run the Python Example
+
+```bash
+# Using uv
+uv run examples/simple_example.py
+
+# Or with activated venv
+python examples/simple_example.py
 ```
 
 ### Launch Jupyter
 
+**Using uv:**
+```bash
+uv run jupyter notebook examples/
+```
+
+**Using pip:**
 ```bash
 jupyter notebook examples/
 ```
