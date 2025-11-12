@@ -120,7 +120,7 @@ CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "{port}"]
         server_content = '''"""FastAPI server for quant strategy deployment."""
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Dict, Any
 import pandas as pd
 import dill
@@ -148,6 +148,10 @@ def load_strategy():
     with open(strategy_dir / "strategy.pkl", "rb") as f:
         strategy_func = dill.load(f)
 
+    # Ensure pandas is available in the function's globals
+    if strategy_func and hasattr(strategy_func, '__globals__'):
+        strategy_func.__globals__['pd'] = pd
+
     # Load metadata
     metadata_path = strategy_dir / "metadata.json"
     if metadata_path.exists():
@@ -160,13 +164,8 @@ load_strategy()
 
 class MarketData(BaseModel):
     """Market data input model."""
-    data: List[Dict[str, Any]] = Field(
-        ...,
-        description="List of OHLCV records with columns: timestamp, open, high, low, close, volume"
-    )
-
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "data": [
                     {
@@ -180,6 +179,12 @@ class MarketData(BaseModel):
                 ]
             }
         }
+    )
+
+    data: List[Dict[str, Any]] = Field(
+        ...,
+        description="List of OHLCV records with columns: timestamp, open, high, low, close, volume"
+    )
 
 
 class SignalResponse(BaseModel):
